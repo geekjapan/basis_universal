@@ -92,6 +92,7 @@ endif
 
 basisu_transcoder_src = files(
     'transcoder/basisu_transcoder.cpp',
+    'transcoder/basisu_transcoder_c_api.cpp',
 )
 
 basisu_src = files(
