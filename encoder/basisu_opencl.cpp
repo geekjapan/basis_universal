@@ -25,11 +25,7 @@
 // We only use OpenCL v1.2 or less.
 #define CL_TARGET_OPENCL_VERSION 120
 
-#ifdef __APPLE__
-#include <OpenCL/opencl.h>
-#else
 #include <CL/cl.h>
-#endif
 
 #define BASISU_OPENCL_ASSERT_ON_ANY_ERRORS (1)
 
