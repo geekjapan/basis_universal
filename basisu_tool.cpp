@@ -795,7 +795,11 @@ public:
 			else
 				m_comp_params.m_mip_srgb = false;
 		}
-				
+
+		if (m_output_filename.size()) {
+			m_individual = false;
+		}
+
 		return true;
 	}
 
