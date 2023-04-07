@@ -65,6 +65,8 @@ encoder_cflags = cc.get_supported_arguments(
     '-mno-sse4.2',
 )
 
+transcoder_cflags = []
+
 if cc.has_argument('-msse4.1')
     encoder_cflags += [
         '-msse4.1',
@@ -82,6 +84,15 @@ if dep_opencl_native.found()
 endif
 
 encoder_cflags += '-DBASISU_SUPPORT_KTX2=1'
+
+if cc.compiles('''
+    #include <type_traits>
+    struct A { int a; };
+    static_assert(std::is_trivially_copyable<A>::value, "");
+''', name : 'std::is_trivially_copyable check')
+    transcoder_cflags += ['-DBASISU_HAVE_STD_TRIVIALLY_COPYABLE']
+    encoder_cflags += ['-DBASISU_HAVE_STD_TRIVIALLY_COPYABLE']
+endif
 
 if dep_zstd_native.found()
     basisu_deps += dep_zstd_native
@@ -125,8 +136,6 @@ basisu_native = executable('basisu', basisu_src,
     override_options : cpp_options,
     dependencies : basisu_deps,
 )
-
-transcoder_cflags = []
 
 if host_machine.endian() == 'big'
     transcoder_cflags += '-DBASISD_IS_BIG_ENDIAN=1'
