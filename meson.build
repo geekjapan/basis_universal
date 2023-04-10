@@ -59,6 +59,7 @@ basisu_cflags = cc.get_supported_arguments(
     '-fno-exceptions',
     '-fno-rtti',
     '-fno-strict-aliasing',
+    '-flax-vector-conversions',
 )
 
 encoder_cflags = cc.get_supported_arguments(
