@@ -1,13 +1,6 @@
 # basis_universal
 Basis Universal Supercompressed GPU Texture Codec
 
-<sub>(This software is available under a free and permissive license (Apache 2.0), but like many other large open source projects it needs financial support to sustain its continued security, bug fixes and improvements. In addition to maintenance and stability there are many desirable features and new interchange formats we would like to add. If your company is using Basis Universal in a product, please consider reaching out.)</sub>
-
-Businesses: support continued development and maintenance via invoiced technical support, maintenance, or sponsoring contracts:
-<br>&nbsp;&nbsp;_E-mail: info @ binomial dot info_ or contact us on [Twitter](https://twitter.com/_binomial)
-
-Also see the [Sponsors](https://github.com/BinomialLLC/basis_universal/wiki/Sponsors-and-Supporters) wiki page.
-
 ----
 
 [![Build status](https://ci.appveyor.com/api/projects/status/87eb0o96pjho4sh0?svg=true)](https://ci.appveyor.com/project/BinomialLLC/basis-universal)
@@ -56,9 +49,6 @@ Detailed legal, license, and IP information is [here](https://github.com/Binomia
 All C/C++ code dependencies are present inside the Basis Universal repo itself to simplify building.
 
 The encoder optionally uses Zstandard's single source file compressor (in zstd/zstd.c) to support compressing supercompressed KTX2 files. The stand-alone transcoder (in the "transcoder" directory) is a single .cpp source file library which has no 3rd party code dependencies apart from zstd/zstddeclib.c, which is also technically optional. It's only used for decompressing UASTC KTX2 files that use Zstandard.
-
-### Note about Visual Studio 2022 (compiling under Windows)
-The C/C++ compiler that ships with MSVC 2022 (Platform Toolset v143) is buggy, and it's been this way for years. I've reported the bugs and I've had others verify that yes, it produces buggy code. I've been doing my best to work around the 2022 compiler bugs, but it's probably not worth the effort. Either use the LLVM (clang-cl) Platform Toolset, or switch to Platform Toolset v142 (Visual Studio 2019's compiler). I test with various versions of gcc and clang, and MSVC 2019.
 
 ### Command Line Compression Tool
 
@@ -326,3 +316,9 @@ licensing to ensure the entire repository has explicit licensing information.
 To ensure continued REUSE compliance, run `reuse lint` at the root of
 a clean, checked-out repository periodically, or run it during CI tests
 before any build artifacts have been created.
+
+----
+
+E-mail: info @ binomial dot info, or contact us on [Twitter](https://twitter.com/_binomial)
+
+Here's the [Sponsors](https://github.com/BinomialLLC/basis_universal/wiki/Sponsors-and-Supporters) wiki page.
