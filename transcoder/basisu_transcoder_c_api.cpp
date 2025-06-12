@@ -32,10 +32,15 @@ ASSERT_BASIST_FORMAT(PVRTC2_4_RGB);
 ASSERT_BASIST_FORMAT(PVRTC2_4_RGBA);
 ASSERT_BASIST_FORMAT(ETC2_EAC_R11);
 ASSERT_BASIST_FORMAT(ETC2_EAC_RG11);
+ASSERT_BASIST_FORMAT(BC6H);
+ASSERT_BASIST_FORMAT(ASTC_HDR_4x4_RGBA);
 ASSERT_BASIST_FORMAT(RGBA32);
 ASSERT_BASIST_FORMAT(RGB565);
 ASSERT_BASIST_FORMAT(BGR565);
 ASSERT_BASIST_FORMAT(RGBA4444);
+ASSERT_BASIST_FORMAT(RGB_HALF);
+ASSERT_BASIST_FORMAT(RGBA_HALF);
+ASSERT_BASIST_FORMAT(RGB_9E5);
 ASSERT_ENUM(BASIST_NUM_FORMATS, basist::transcoder_texture_format::cTFTotalTextureFormats);
 
 ASSERT_BASISU_FORMAT(ETC1);
@@ -48,7 +53,9 @@ ASSERT_BASISU_FORMAT(BC3);
 ASSERT_BASISU_FORMAT(BC4);
 ASSERT_BASISU_FORMAT(BC5);
 ASSERT_BASISU_FORMAT(BC7);
-ASSERT_BASISU_FORMAT(ASTC4x4);
+ASSERT_BASISU_FORMAT(ASTC_LDR_4x4);
+ASSERT_BASISU_FORMAT(ASTC_HDR_4x4);
+ASSERT_BASISU_FORMAT(ASTC_HDR_6x6);
 ASSERT_BASISU_FORMAT(PVRTC1_4_RGB);
 ASSERT_BASISU_FORMAT(PVRTC1_4_RGBA);
 ASSERT_BASISU_FORMAT(ATC_RGB);
@@ -58,6 +65,7 @@ ASSERT_BASISU_FORMAT(PVRTC2_4_RGBA);
 ASSERT_BASISU_FORMAT(ETC2_R11_EAC);
 ASSERT_BASISU_FORMAT(ETC2_RG11_EAC);
 ASSERT_BASISU_FORMAT(UASTC4x4);
+ASSERT_BASISU_FORMAT(UASTC_HDR_4x4);
 ASSERT_BASISU_FORMAT(BC1_NV);
 ASSERT_BASISU_FORMAT(BC1_AMD);
 ASSERT_BASISU_FORMAT(RGBA32);
@@ -84,6 +92,8 @@ STATIC_ASSERT(offsetof(basist_slice_info, height) == offsetof(basist::basisu_sli
 STATIC_ASSERT(offsetof(basist_slice_info, num_blocks_x) == offsetof(basist::basisu_slice_info, m_num_blocks_x));
 STATIC_ASSERT(offsetof(basist_slice_info, num_blocks_y) == offsetof(basist::basisu_slice_info, m_num_blocks_y));
 STATIC_ASSERT(offsetof(basist_slice_info, total_blocks) == offsetof(basist::basisu_slice_info, m_total_blocks));
+STATIC_ASSERT(offsetof(basist_slice_info, block_width) == offsetof(basist::basisu_slice_info, m_block_width));
+STATIC_ASSERT(offsetof(basist_slice_info, block_height) == offsetof(basist::basisu_slice_info, m_block_height));
 STATIC_ASSERT(offsetof(basist_slice_info, slice_index) == offsetof(basist::basisu_slice_info, m_slice_index));
 STATIC_ASSERT(offsetof(basist_slice_info, image_index) == offsetof(basist::basisu_slice_info, m_image_index));
 STATIC_ASSERT(offsetof(basist_slice_info, level_index) == offsetof(basist::basisu_slice_info, m_level_index));
@@ -97,6 +107,8 @@ STATIC_ASSERT(offsetof(basist_image_info, orig_width) == offsetof(basist::basisu
 STATIC_ASSERT(offsetof(basist_image_info, orig_height) == offsetof(basist::basisu_image_info, m_orig_height));
 STATIC_ASSERT(offsetof(basist_image_info, width) == offsetof(basist::basisu_image_info, m_width));
 STATIC_ASSERT(offsetof(basist_image_info, height) == offsetof(basist::basisu_image_info, m_height));
+STATIC_ASSERT(offsetof(basist_image_info, block_width) == offsetof(basist::basisu_image_info, m_block_width));
+STATIC_ASSERT(offsetof(basist_image_info, block_height) == offsetof(basist::basisu_image_info, m_block_height));
 STATIC_ASSERT(offsetof(basist_image_info, num_blocks_x) == offsetof(basist::basisu_image_info, m_num_blocks_x));
 STATIC_ASSERT(offsetof(basist_image_info, num_blocks_y) == offsetof(basist::basisu_image_info, m_num_blocks_y));
 STATIC_ASSERT(offsetof(basist_image_info, total_blocks) == offsetof(basist::basisu_image_info, m_total_blocks));
@@ -111,6 +123,8 @@ STATIC_ASSERT(offsetof(basist_image_level_info, orig_width) == offsetof(basist::
 STATIC_ASSERT(offsetof(basist_image_level_info, orig_height) == offsetof(basist::basisu_image_level_info, m_orig_height));
 STATIC_ASSERT(offsetof(basist_image_level_info, width) == offsetof(basist::basisu_image_level_info, m_width));
 STATIC_ASSERT(offsetof(basist_image_level_info, height) == offsetof(basist::basisu_image_level_info, m_height));
+STATIC_ASSERT(offsetof(basist_image_level_info, block_width) == offsetof(basist::basisu_image_level_info, m_block_width));
+STATIC_ASSERT(offsetof(basist_image_level_info, block_height) == offsetof(basist::basisu_image_level_info, m_block_height));
 STATIC_ASSERT(offsetof(basist_image_level_info, num_blocks_x) == offsetof(basist::basisu_image_level_info, m_num_blocks_x));
 STATIC_ASSERT(offsetof(basist_image_level_info, num_blocks_y) == offsetof(basist::basisu_image_level_info, m_num_blocks_y));
 STATIC_ASSERT(offsetof(basist_image_level_info, total_blocks) == offsetof(basist::basisu_image_level_info, m_total_blocks));
@@ -238,7 +252,7 @@ uint32_t basist_transcoder_get_total_images(basist_transcoder *tc) {
 }
 
 basist_source_format basist_transcoder_get_source_format(basist_transcoder *tc) {
-    return static_cast<basist_source_format>(TC.get_tex_format(DATA));
+    return static_cast<basist_source_format>(TC.get_basis_tex_format(DATA));
 }
 
 uint32_t basist_transcoder_get_total_image_levels(basist_transcoder *tc, uint32_t image_index) {

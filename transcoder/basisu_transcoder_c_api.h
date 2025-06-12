@@ -31,12 +31,17 @@ typedef enum basist_texture_format {
     BASIST_FORMAT_PVRTC2_4_RGBA = 19,
     BASIST_FORMAT_ETC2_EAC_R11 = 20,
     BASIST_FORMAT_ETC2_EAC_RG11 = 21,
+    BASIST_FORMAT_BC6H = 22,
+    BASIST_FORMAT_ASTC_HDR_4x4_RGBA = 23,
     BASIST_FORMAT_RGBA32 = 13,
     BASIST_FORMAT_RGB565 = 14,
     BASIST_FORMAT_BGR565 = 15,
     BASIST_FORMAT_RGBA4444 = 16,
+    BASIST_FORMAT_RGB_HALF = 24,
+    BASIST_FORMAT_RGBA_HALF = 25,
+    BASIST_FORMAT_RGB_9E5 = 26,
 
-    BASIST_NUM_FORMATS = 22,
+    BASIST_NUM_FORMATS = 28,
 } basist_texture_format;
 
 typedef enum basisu_texture_format {
@@ -54,8 +59,12 @@ typedef enum basisu_texture_format {
     BASISU_FORMAT_BC3,
     BASISU_FORMAT_BC4,
     BASISU_FORMAT_BC5,
+    BASISU_FORMAT_BC6Signed,
+    BASISU_FORMAT_BC6Unsigned,
     BASISU_FORMAT_BC7,
-    BASISU_FORMAT_ASTC4x4,
+    BASISU_FORMAT_ASTC_LDR_4x4,
+    BASISU_FORMAT_ASTC_HDR_4x4,
+    BASISU_FORMAT_ASTC_HDR_6x6,
     BASISU_FORMAT_PVRTC1_4_RGB,
     BASISU_FORMAT_PVRTC1_4_RGBA,
     BASISU_FORMAT_ATC_RGB,
@@ -65,13 +74,16 @@ typedef enum basisu_texture_format {
     BASISU_FORMAT_ETC2_R11_EAC,
     BASISU_FORMAT_ETC2_RG11_EAC,
     BASISU_FORMAT_UASTC4x4,
+    BASISU_FORMAT_UASTC_HDR_4x4,
     BASISU_FORMAT_BC1_NV,
     BASISU_FORMAT_BC1_AMD,
     BASISU_FORMAT_RGBA32,
     BASISU_FORMAT_RGB565,
     BASISU_FORMAT_BGR565,
     BASISU_FORMAT_RGBA4444,
-    BASISU_FORMAT_ABGR4444
+    BASISU_FORMAT_ABGR4444,
+
+    BASISU_FORMAT_ASTC4x4 = BASISU_FORMAT_ASTC_LDR_4x4,
 } basisu_texture_format;
 
 typedef enum basist_texture_type {
@@ -95,6 +107,9 @@ typedef enum basist_source_format {
 
     BASIST_SOURCE_ETC1S = 0,
     BASIST_SOURCE_UASTC4x4 = 1,
+    BASIST_SOURCE_UASTC_HDR_4x4 = 2,
+    BASIST_SOURCE_ASTC_HDR_6x6 = 3,
+    BASIST_SOURCE_ASTC_HDR_6x6_INTERMEDIATE = 4,
 } basist_source_format;
 
 typedef enum basist_decode_flag {
@@ -137,6 +152,9 @@ typedef struct basist_slice_info_s {
     uint32_t num_blocks_y;
     uint32_t total_blocks;
 
+    uint32_t block_width;
+    uint32_t block_height;
+
     uint32_t compressed_size;
 
     uint32_t slice_index;	// the slice index in the .basis file
@@ -163,6 +181,9 @@ typedef struct basist_image_info_s {
     uint32_t width;
     uint32_t height;
 
+    uint32_t block_width;
+    uint32_t block_height;
+
     uint32_t num_blocks_x;
     uint32_t num_blocks_y;
     uint32_t total_blocks;
@@ -186,6 +207,9 @@ typedef struct basist_image_level_info_s {
 
     uint32_t width;
     uint32_t height;
+
+    uint32_t block_width;
+    uint32_t block_height;
 
     uint32_t num_blocks_x;
     uint32_t num_blocks_y;
