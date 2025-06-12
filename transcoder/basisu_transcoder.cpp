@@ -15438,7 +15438,10 @@ namespace basist
 					if (astc_comp == (uint32_t)unpacked_src_blk.m_astc.m_ccs)
 						bc7_comp = 3;
 					else if (astc_comp == 3)
+					{
 						bc7_comp = unpacked_src_blk.m_astc.m_ccs;
+						if (bc7_comp > 3) __builtin_unreachable();
+					}
 
 					uint32_t l = 255, h = 255;
 					if (astc_comp < total_comps)
